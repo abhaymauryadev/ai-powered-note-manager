@@ -3,6 +3,7 @@ import Script from "next/script";
 
 const SITE_URL = "https://ai-powered-note-manager.vercel.app";
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
+const GTM_ID = "GTM-T35PBX4B";
 
 export const metadata = {
   metadataBase: new URL(SITE_URL),
@@ -82,6 +83,24 @@ export default function RootLayout({ children }) {
         className="min-h-screen flex flex-col"
         suppressHydrationWarning
       >
+        <Script id="google-tag-manager" strategy="afterInteractive">
+          {`
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','${GTM_ID}');
+          `}
+        </Script>
+        <noscript>
+          <iframe
+            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          />
+        </noscript>
+
         {GA_ID && (
           <>
             <Script
