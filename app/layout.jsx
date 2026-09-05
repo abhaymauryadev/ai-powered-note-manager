@@ -1,28 +1,55 @@
 import "./globals.css";
+import Script from "next/script";
+
+const SITE_URL = "https://ai-powered-note-manager.vercel.app";
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 
 export const metadata = {
+  metadataBase: new URL(SITE_URL),
+
   title: "AI Notes Manager",
-  description: "AI-powered notes app built with Next.js",
+
+  description:
+    "Organize and manage your notes with AI-powered efficiency.",
+
   keywords: [
-    // Short-tail
-    "notes app", "AI notes", "Next.js app", "productivity", "notebooks",
-    // Long-tail
+    "notes app",
+    "AI notes",
+    "Next.js app",
+    "productivity",
+    "notebooks",
     "AI-powered notebook manager for students",
     "best notes app for productivity and organization",
     "Next.js AI app to manage personal and work notebooks",
     "collaborative notebook tool with AI search",
-    "digital notebook manager with smart features"
+    "digital notebook manager with smart features",
   ],
 
-  authors: [{ name: "Abhay Maurya", url: "https://abhaymaurya.vercel.app" }],
+  authors: [
+    {
+      name: "Abhay Maurya",
+      url: "https://abhaymaurya.vercel.app",
+    },
+  ],
+
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
+
   openGraph: {
     title: "AI Notes Manager",
-    description: "Organize and manage your notes with AI-powered efficiency.",
-    url: "https://ai-powered-note-manager.vercel.app",
+    description:
+      "Organize and manage your notes with AI-powered efficiency.",
+    url: SITE_URL,
     siteName: "AI Notes Manager",
     images: [
       {
-        url: "https://yourdomain.com/preview.png",
+        url: `${SITE_URL}/preview.png`,
         width: 1200,
         height: 630,
         alt: "AI Notes Manager preview",
@@ -30,59 +57,50 @@ export const metadata = {
     ],
     type: "website",
   },
+
   twitter: {
     card: "summary_large_image",
     title: "AI Notes Manager",
     description: "AI-powered notes app built with Next.js",
-    images: ["https://yourdomain.com/preview.png"],
+    images: [`${SITE_URL}/preview.png`],
     creator: "@yourtwitterhandle",
   },
+
   alternates: {
-    canonical: "https://ai-powered-note-manager.vercel.app",
+    canonical: SITE_URL,
+  },
+
+  verification: {
+    google: "google0424c833a4097367.html",
   },
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <head>
-        {/* SEO meta tags */}
-        <meta name="robots" content="index, follow" />
-        <meta name="bingbot" content="index, follow" />
-        <meta name="googlebot" content="index, follow" />
+      <body
+        className="min-h-screen flex flex-col"
+        suppressHydrationWarning
+      >
+        {GA_ID && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+              strategy="afterInteractive"
+            />
 
-        {/* JSON-LD structured data for Breadcrumbs */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "BreadcrumbList",
-              itemListElement: [
-                {
-                  "@type": "ListItem",
-                  position: 1,
-                  name: "Home",
-                  item: "https://ai-powered-note-manager.vercel.app",
-                },
-                {
-                  "@type": "ListItem",
-                  position: 2,
-                  name: "Notebooks",
-                  item: "https://ai-powered-note-manager.vercel.app/notebooks",
-                },
-                {
-                  "@type": "ListItem",
-                  position: 3,
-                  name: "Folder",
-                  item: "https://ai-powered-note-manager.vercel.app/folders/sample-folder",
-                },
-              ],
-            }),
-          }}
-        />
-      </head>
-      <body className="min-h-screen flex flex-col" suppressHydrationWarning={true}>
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                window.gtag = gtag;
+                gtag('js', new Date());
+                gtag('config', '${GA_ID}');
+              `}
+            </Script>
+          </>
+        )}
+
         <main>{children}</main>
       </body>
     </html>
