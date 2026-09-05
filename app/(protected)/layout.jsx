@@ -2,6 +2,14 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import AuthProvider from "@/components/providers/AuthProvider";
 import Sidebar from "@/components/common/Sidebar";
+
+export const metadata = {
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
+
 export default async function ProtectedLayout({ children }) {
   const session = await getServerSession();
 
