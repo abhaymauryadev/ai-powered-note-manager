@@ -2,16 +2,26 @@ import "./globals.css";
 import Script from "next/script";
 
 const SITE_URL = "https://ai-powered-note-manager.vercel.app";
+const SITE_NAME = "AI Notes Manager";
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 const GTM_ID = "GTM-T35PBX4B";
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#0f172a", // change to your brand color
+};
 
 export const metadata = {
   metadataBase: new URL(SITE_URL),
 
-  title: "AI Notes Manager",
+  title: {
+    default: "AI Notes Manager — Smart AI-Powered Notebook Organizer",
+    template: `%s | ${SITE_NAME}`,
+  },
 
   description:
-    "Organize and manage your notes with AI-powered efficiency.",
+    "Organize, search, and manage your notes with AI-powered efficiency. A smart notebook manager built for students, teams, and professionals.",
 
   keywords: [
     "notes app",
@@ -19,12 +29,15 @@ export const metadata = {
     "Next.js app",
     "productivity",
     "notebooks",
+    "AI note manager",
     "AI-powered notebook manager for students",
     "best notes app for productivity and organization",
     "Next.js AI app to manage personal and work notebooks",
     "collaborative notebook tool with AI search",
     "digital notebook manager with smart features",
   ],
+
+  category: "productivity",
 
   authors: [
     {
@@ -33,27 +46,41 @@ export const metadata = {
     },
   ],
 
+  creator: "Abhay Maurya",
+  publisher: "Abhay Maurya",
+
   robots: {
     index: true,
     follow: true,
     googleBot: {
       index: true,
       follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
     },
   },
 
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
+
+  manifest: "/site.webmanifest",
+
   openGraph: {
-    title: "AI Notes Manager",
+    title: "AI Notes Manager — Smart AI-Powered Notebook Organizer",
     description:
       "Organize and manage your notes with AI-powered efficiency.",
     url: SITE_URL,
-    siteName: "AI Notes Manager",
+    siteName: SITE_NAME,
+    locale: "en_US",
     images: [
       {
         url: `${SITE_URL}/preview.png`,
         width: 1200,
         height: 630,
-        alt: "AI Notes Manager preview",
+        alt: "AI Notes Manager — screenshot of the app dashboard",
       },
     ],
     type: "website",
@@ -76,9 +103,37 @@ export const metadata = {
   },
 };
 
+// Structured data (JSON-LD) — tells Google exactly what this site is
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: SITE_NAME,
+  url: SITE_URL,
+  applicationCategory: "ProductivityApplication",
+  operatingSystem: "Web",
+  description:
+    "Organize and manage your notes with AI-powered efficiency.",
+  author: {
+    "@type": "Person",
+    name: "Abhay Maurya",
+    url: "https://abhaymaurya.vercel.app",
+  },
+  offers: {
+    "@type": "Offer",
+    price: "0",
+    priceCurrency: "USD",
+  },
+};
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body
         className="min-h-screen flex flex-col"
         suppressHydrationWarning

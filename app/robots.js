@@ -5,8 +5,21 @@ export default function robots() {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/api/", "/auth/", "/dashboard/", "/folders/", "/notebooks/", "/notes/", "/search/", "/settings/", "/summaries/", "/tags/", "/trash/"],
+      disallow: [
+        "/api/",
+        "/auth/",
+        "/dashboard/",
+        "/folders/",
+        "/notebooks/",
+        "/notes/",
+        "/search/",
+        "/settings/",
+        "/summaries/",
+        "/tags/",
+        "/trash/",
+      ],
     },
     sitemap: `${SITE_URL}/sitemap.xml`,
+    host: SITE_URL,
   };
 }
